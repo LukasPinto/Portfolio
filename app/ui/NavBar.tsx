@@ -9,7 +9,7 @@ export default function NavBar() {
   const router = useRouter();
   return (
     <>
-      <VStack paddingTop={4}>
+      <VStack paddingTop={4} width="100%" zIndex={100} background="#09090b">
         <Box width="full">
           <Tabs.Root>
             <Tabs.List>

@@ -1,24 +1,24 @@
 import type { NextConfig } from "next";
-import remarkGfm from 'remark-gfm';
-import createMDX from '@next/mdx'
 const nextConfig: NextConfig = {
-  // pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  async redirects() {
+    return [
+      {
+        source: '/', // La ruta de origen que quieres redirigir
+        destination: '/AboutMe', // La ruta de destino a la que quieres redirigir
+        permanent: true, // true para 308 (permanente), false para 307 (temporal)
+      },
+
+    ]
+  },
+  //pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   experimental: {
     optimizePackageImports: ["@chakra-ui/react"],
-    mdxRs: true
+    //mdxRs: true
   },
-  // transpilePackages: ['next-mdx-remote-client'],
+  //transpilePackages: ['next-mdx-remote-client'],
 };
 
-const withMDX = createMDX({
-  extension: /\.(md|mdx)$/,
 
-  options: {
-    remarkPlugins: [],
-    rehypePlugins: [],
-  },
-})
 
-// Merge MDX config with Next.js config
-export default withMDX(nextConfig)
-// export default nextConfig
+export default nextConfig
+

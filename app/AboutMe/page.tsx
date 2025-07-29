@@ -7,36 +7,22 @@ import {
   Separator,
   Flex,
   Center,
-  Image,
 } from "@chakra-ui/react";
-// import { getFiles } from '../mdxFiles.js'
-// import { promises as fs } from 'node:fs'
-import path from "node:path";
-import { use } from "react";
+
 import Tecnologias from "./Tecnologias";
+import { getFileBySlug } from "../utils/mdxFiles";
 
-// async function getFiles(pathDir: any) {
-//   const directoryPath = path.join(process.cwd(), pathDir);
-//   let files: string[] = []
-//   let errroReading = null;
-//
-//   try {
-//     const items = await fs.readdir(directoryPath, { withFileTypes: true });
-//     files = items
-//       .filter(item => item.isFile())
-//       .map(item => item.name)
-//   } catch {
-//     console.log('error al leer el directorio')
-//   }
-//   return files
-// }
-
-export default function AboutMe() {
+export default async function AboutMe() {
   // const images = getFiles();
+  const { source } = await getFileBySlug({ slug: "experiencia" });
   return (
     <>
-      <Center maxH="full" width="full">
-        <Stack paddingTop={4} paddingBottom={4} maxH="auto">
+      <Center
+        maxHeight="lvh"
+        overflow="auto"
+        paddingX={{ base: "1rem", sm: "1rem", md: "1rem", lg: "2rem" }}
+      >
+        <Stack paddingTop={4} paddingBottom={4} marginY={4}>
           <Stack
             direction={{
               base: "column",
@@ -44,8 +30,6 @@ export default function AboutMe() {
               md: "column",
               lg: "row",
             }}
-            marginLeft={2}
-            marginRight={2}
           >
             <Box>
               <Heading size="4xl">Sobre mí</Heading>
@@ -87,28 +71,30 @@ export default function AboutMe() {
           <Heading size="4xl">Experiencia y proyectos</Heading>
           <Separator />
           <Box>
-            <Text>
-              is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industry's standard dummy text ever since
-              the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book. It has survived not
-              only five centuries, but also the leap into electronic
-              typesetting, remaining essentially unchanged. It was popularised
-              in the 1960s with the release of Letraset sheets containing Lorem
-              Ipsum passages, and more recently with desktop publishing software
-              like Aldus PageMaker including versions of Lorem Ipsum.
-            </Text>
+            {/* {source} */}
+            {/* <Text> */}
+            {/*   is simply dummy text of the printing and typesetting industry. */}
+            {/*   Lorem Ipsum has been the industry's standard dummy text ever since */}
+            {/*   the 1500s, when an unknown printer took a galley of type and */}
+            {/*   scrambled it to make a type specimen book. It has survived not */}
+            {/*   only five centuries, but also the leap into electronic */}
+            {/*   typesetting, remaining essentially unchanged. It was popularised */}
+            {/*   in the 1960s with the release of Letraset sheets containing Lorem */}
+            {/*   Ipsum passages, and more recently with desktop publishing software */}
+            {/*   like Aldus PageMaker including versions of Lorem Ipsum. */}
+            {/* </Text> */}
           </Box>
         </Stack>
+        <Box
+          minWidth={{
+            base: "0",
+            sm: "0",
+            md: "0",
+            lg: "15rem",
+            xl: "15rem",
+          }}
+        ></Box>
       </Center>
     </>
   );
 }
-
-// AboutMe.getInitalProps = async () => {
-//   const images = await getFiles('/public/teclogias')
-//   console.log(images)
-//   return {
-//     props: { images }
-//   }
-// }
