@@ -1,10 +1,10 @@
-import { getAllMdxFiles, getFileBySlug, plugins } from "../../utils/mdxFiles";
+import { getAllMdxFiles, getFileBySlug, plugins } from "@/app/utils/mdxFiles";
 import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc";
 import { useMDXComponents } from "@/mdx-components";
 import { Box, Stack, Heading, Image, Badge, Center } from "@chakra-ui/react";
-import TableOfContent from "../../ui/Toc";
-import "../../styles/code.css";
-import "../../styles/global.css";
+import TableOfContent from "@/app/ui/Toc";
+import "@/app/styles/code.css";
+import "@/app/styles/global.css";
 export default async function Page({ params }: { params: any }) {
   const { slug } = await params;
 
@@ -50,9 +50,8 @@ export default async function Page({ params }: { params: any }) {
               <Image
                 objectFit="cover"
                 w="50rem"
-                src={`${
-                  (file.matter.image as { path: string }).path as string
-                }`}
+                src={`${(file.matter.image as { path: string }).path as string
+                  }`}
                 rounded="md"
                 marginTop={3}
               />

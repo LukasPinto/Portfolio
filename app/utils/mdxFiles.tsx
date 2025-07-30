@@ -6,7 +6,7 @@ import { nodeTypes } from "@mdx-js/mdx";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import remarkEmoji from "remark-emoji";
-import { compile, run } from "@mdx-js/mdx";
+import { compile } from "@mdx-js/mdx";
 import withSlugs from "remark-slug";
 import withToc from "@stefanprobst/remark-extract-toc";
 import remarkFlexibleParagraphs from "remark-flexible-paragraphs";

@@ -1,11 +1,9 @@
 "use client";
-import { LuFile, LuFolder } from "react-icons/lu";
 import { Toc } from "@stefanprobst/remark-extract-toc";
 import { TreeView, createTreeCollection, Box } from "@chakra-ui/react";
-import { useEffect, useMemo, useState } from "react";
-import useActiveSection from "../hooks/useActiveSection";
-import { HiChevronRight, HiChevronDoubleRight } from "react-icons/hi2";
-import { FaRegCircle, FaCircle, FaDotCircle } from "react-icons/fa";
+import { useMemo, useState } from "react";
+import useActiveSection from "@/app/hooks/useActiveSection";
+import { FaRegCircle, FaCircle } from "react-icons/fa";
 interface Node {
   id: string;
   name: string;
@@ -80,7 +78,7 @@ export default function TableOfContent({ content, matter, slug }: any) {
           maxW="sm"
           selectedValue={[activeSectionId]}
           expandedValue={expandedValue}
-          onExpandedChange={(e) => {}}
+          onExpandedChange={(e) => { }}
         >
           <TreeView.Label>{matter?.title}</TreeView.Label>
           <TreeView.Tree>

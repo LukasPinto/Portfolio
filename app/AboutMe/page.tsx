@@ -1,17 +1,15 @@
 import {
-  Card,
   Stack,
   Box,
   Heading,
   Text,
   Separator,
   Flex,
-  Center,
 } from "@chakra-ui/react";
 import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc";
 
-import Tecnologias from "./Tecnologias";
-import { getFileBySlug, plugins } from "../utils/mdxFiles";
+import Tecnologias from "@/app/ui/Tecnologias";
+import { getFileBySlug, plugins } from "@/app/utils/mdxFiles";
 import { useMDXComponents } from "@/mdx-components";
 const options: MDXRemoteOptions = {
   parseFrontmatter: true,
@@ -29,7 +27,9 @@ export default async function AboutMe() {
       <Stack
         display="flex"
         direction="row"
-        paddingX={{ base: "1rem", sm: "1rem", md: "1rem", lg: "2rem" }}
+        paddingX={{ base: "1rem", sm: "1rem", md: "1rem", lg: "2rem", xl: "2rem" }}
+        width={{ base: "full", sm: "full", md: "full", lg: "90%", xl: "85%" }}
+
       >
         <Stack paddingTop={4} paddingBottom={4} marginY={4}>
           <Stack

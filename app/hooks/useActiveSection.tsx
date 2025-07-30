@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 const defaultOptions = {
   root: null, // El viewport del documento es el elemento raíz que se observa
-  rootMargin: "0px 0px -20% 0px", // Márgenes: top, right, bottom, left. Ajusta el '-70%' según tu diseño (ej. si tienes un navbar fijo).
+  rootMargin: "0px 0px -20% 0px",
   threshold: 0, // El callback se ejecuta tan pronto como el elemento entra/sale del rootMargin.
 };
 
