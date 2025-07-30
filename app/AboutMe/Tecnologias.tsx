@@ -5,7 +5,6 @@ export default async function Tecnologias() {
   const images = await getFiles(["public", "tecnologias"]);
   return (
     <>
-      {console.log(images)}
       {images.map((img: any, index: any) => (
         <Box key={index}>
           <Center height="10rem" w="10rem">

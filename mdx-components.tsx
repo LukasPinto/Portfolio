@@ -102,7 +102,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     code: (props) => (
       <>
-        {console.log(props)}
         {props?.className === undefined ? (
           <code className="inline-code" {...props}>
             {" "}

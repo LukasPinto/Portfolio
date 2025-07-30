@@ -5,16 +5,15 @@ export default async function Blog() {
   let posts = await getAllMdxFiles();
   posts = posts.filter((file: any) => file.slug != "experiencia");
   return (
-    <HStack maxW="lvw" justifyContent="center" maxHeight="80%" overflow="auto">
+    <HStack justifyContent="center">
       <Box width="lvw">
         <Stack
           gap={2}
           justifyContent="center"
-          padding={{ base: 2 }}
-          paddingX={{ base: 2, xl: "10rem" }}
+          paddingY={{ base: 5 }}
+          paddingX={{ base: 2, lg: "5rem", xl: "10rem" }}
           maxWidth="full"
-          overflowY="scroll"
-          maxHeight="lvh"
+          overflowX="scroll"
         >
           {posts.map((item: any, index: number) => (
             <>
@@ -23,6 +22,7 @@ export default async function Blog() {
                 variant="plain"
                 textDecoration="none"
                 href={`/Blog/${item.slug}`}
+                minWidth="32rem"
               >
                 <Card.Root
                   zIndex={1} // si es negativo no hace hover
@@ -85,8 +85,9 @@ export default async function Blog() {
           md: "none",
           lg: "block",
         }}
+        width="20%"
       >
-        TODO: Barra lateral para el Blog
+        {/* queda pendiente por hacer una posible barra latera de tags o busquedas, además de la paginación. */}
       </Box>
     </HStack>
   );

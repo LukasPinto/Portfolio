@@ -92,7 +92,7 @@ export async function getFileBySlug({ slug }: any) {
   /*PRUEBA CON UNIFIED */
 
   // console.log((await toc).data.toc)
-  console.log(toc);
+  // console.log(toc);
   return {
     // source: source.content,
     source: mdxSource,

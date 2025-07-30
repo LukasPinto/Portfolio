@@ -18,9 +18,18 @@ export default async function Page({ params }: { params: any }) {
   };
   return (
     <>
-      {console.log(file.matter)}
-      <Stack direction="row" paddingBottom="5rem" maxHeight="lvh">
-        <Box overflowY="scroll" maxHeight="lvh" paddingX={20} paddingY={2}>
+      <Stack direction="row" paddingBottom="5rem">
+        <Box
+          paddingX={{ base: 5, sm: 5, md: 5, lg: 5, xl: 20 }}
+          paddingY={2}
+          maxWidth={{
+            base: "100%",
+            sm: "100%",
+            md: "100%",
+            lg: "70%",
+            xl: "70%",
+          }}
+        >
           <Stack direction="column">
             <Center>
               <Box w="50rem">
@@ -72,20 +81,7 @@ export default async function Page({ params }: { params: any }) {
             dangerouslySetInnerHTML={{ __html: file.result.value.toString() }}
           ></div> */}
         </Box>
-        <Box
-          width="40%"
-          alignSelf="start"
-          display={{
-            base: "none",
-            sm: "none",
-            md: "none",
-            lg: "block",
-          }}
-          position="sticky"
-          top="4rem"
-          height="fit-content"
-          paddingRight={4}
-        >
+        <Box width="30%" display="flex" paddingRight={4}>
           <TableOfContent
             content={file.toc}
             slug={slug}
@@ -102,7 +98,7 @@ export async function generateStaticParams() {
   const pages = files.map((item: any) => {
     slug: item.slug;
   });
-  console.log("static params", files);
+
   return [pages];
 }
 

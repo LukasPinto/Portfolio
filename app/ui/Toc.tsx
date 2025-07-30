@@ -49,9 +49,9 @@ export default function TableOfContent({ content, matter, slug }: any) {
   );
 
   const activeSectionId = useActiveSection(allSectionsIds, "") as any | "";
-  useEffect(() => {
-    console.log(matter, slug);
-  }, [activeSectionId]);
+  // useEffect(() => {
+  //   console.log(matter, slug);
+  // }, [activeSectionId]);
   const convertedData: Node[] = convertToNodes(content as any);
 
   const toc = createTreeCollection<Node>({
@@ -63,7 +63,18 @@ export default function TableOfContent({ content, matter, slug }: any) {
   const [expandedValue, setExpandedValue] = useState<string[]>(allSectionsIds);
   return (
     <>
-      <Box position="sticky" paddingY={2}>
+      <Box
+        alignSelf="start"
+        display={{
+          base: "none",
+          sm: "none",
+          md: "none",
+          lg: "block",
+        }}
+        position="sticky"
+        top="4rem"
+        paddingY={2}
+      >
         <TreeView.Root
           collection={toc}
           maxW="sm"
