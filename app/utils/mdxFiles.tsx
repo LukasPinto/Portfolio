@@ -9,27 +9,23 @@ import remarkEmoji from "remark-emoji";
 import { compile } from "@mdx-js/mdx";
 import withSlugs from "remark-slug";
 import withToc from "@stefanprobst/remark-extract-toc";
-import remarkFlexibleParagraphs from "remark-flexible-paragraphs";
 import { type PluggableList } from "unified";
-
 import rehypeHighlight from "rehype-highlight";
 import rehypeHighlightLines from "rehype-highlight-code-lines";
 import rehypeSlug from "rehype-slug";
 import rehypePreLanguage from "rehype-pre-language";
 import { getFrontmatter } from "next-mdx-remote-client/utils";
-
-import remarkCodeTitles from "remark-code-titles";
 import rehypeCodeMeta from "rehype-code-meta";
-
+import remarkCodeTitles from "remark-flexible-code-titles";
 import remarkReadingTime from "remark-reading-time";
 const rootPath = process.cwd();
 
 const remarkPlugins: PluggableList = [
   remarkGfm,
-  remarkCodeTitles,
+  //remarkCodeTitles,
   remarkEmoji,
-  remarkFlexibleParagraphs,
-  //remarkFlexibleCodeTitles,
+  //remarkFlexibleParagraphs,
+  remarkCodeTitles,
   //remarkCodeTitles,
 ];
 
