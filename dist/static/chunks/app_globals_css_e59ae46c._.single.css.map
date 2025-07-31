@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/app/globals.css"],"sourcesContent":["html, body,#root { min-heigth: 100vh;   min-width: 100%; }\n"],"names":[],"mappings":"AAAA"}}]
-}
