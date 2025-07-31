@@ -28,8 +28,8 @@ const roboto = Roboto({
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props;
   return (
-    <html lang="en" className={roboto.variable} suppressHydrationWarning>
-      <body>
+    <html lang="en" className={roboto.variable} suppressHydrationWarning >
+      <body >
         <Provider>
           <Grid
             templateRows="repeat(5, 1fr)"

@@ -4,6 +4,7 @@ author: Lukas Pinto
 date: 2023-12-15 12:00:00 +0800
 categories: [HackMyVM]
 tags: [LFI, SSTI, Log Poisoning, Gitea]
+description: "Se identificaron los puertos 22, 80 y 3000 abiertos, destacando un Gitea en el puerto 3000 y una app web vulnerable en el puerto 80. Se explotó una inyección SQLi para obtener un subdominio y luego un LFI que permitió leer archivos sensibles. Con credenciales obtenidas, se explotó una vulnerabilidad autenticada en Gitea para obtener una shell como usuario. Finalmente, se aprovechó una vulnerabilidad SSTI en una app Flask ejecutada como root para escalar privilegios."
 pin: true
 image:
   path: /posts/2023-12-15-HVM-Logan2/logan2.png

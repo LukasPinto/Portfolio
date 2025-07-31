@@ -74,11 +74,7 @@ export default async function Page({ params }: { params: any }) {
             options={options}
           />
 
-          {/*
-            // esto solo siver para trabajar con unified
-          <div
-            dangerouslySetInnerHTML={{ __html: file.result.value.toString() }}
-          ></div> */}
+         
         </Box>
         <Box width="30%" display="flex" paddingRight={4}>
           <TableOfContent

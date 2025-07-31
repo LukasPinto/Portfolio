@@ -17,6 +17,7 @@ tags:
     Responder,
     Scripting,
   ]
+description: "La máquina Authority fue comprometida en un entorno de Active Directory. Tras enumerar un servicio web PWM y recursos SMB, se descubrió un Ansible Playbook que contenía credenciales en vaults encriptados. Esto llevó a la captura de las credenciales de svc_ldap vía Responder, permitiendo el acceso por WinRM. Con el privilegio SeMachineAccountPrivilege, se abusó de ADCS (ESC1) para obtener un certificado de Administrator, escalando así a Domain Admin mediante Certipy o PassTheCert." 
 pin: true
 image:
   path: /posts/2023-12-26-HTB-Authority/authority.png

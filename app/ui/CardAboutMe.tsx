@@ -20,10 +20,10 @@ export default function CardAboutMe() {
     >
       <Center paddingY={4} height={{ base: "full", lg: "lvh", xl: "lvh" }}>
         <Card.Root width="100%" height="full">
-          <Card.Header>
+          <Card.Header >
             <Center>
               <Image
-                alt="Kanekik"
+                alt="Lukas Pinto"
                 src="/portada.png"
                 boxSize="130px"
                 borderRadius="full"
@@ -31,8 +31,8 @@ export default function CardAboutMe() {
                 borderColor="white"
               />
             </Center>
-            <Center>
-              <Heading size="2xl">Kanekik</Heading>
+            <Center paddingTop='1rem'>
+              <Heading size="2xl">Lukas Pinto</Heading>
             </Center>
           </Card.Header>
           <Card.Body>
@@ -42,9 +42,9 @@ export default function CardAboutMe() {
               justifyContent="space-between"
               height="full"
             >
-              <Text textAlign="center">
+              <Text textAlign="center" fontStyle='italic'>
                 Estudiante de Ingenieria Civil informatica y entusiasta de la
-                ciberseguridad y los CTF's
+                ciberseguridad y los CTF&apos;s
               </Text>
 
               <Center gap={5}>

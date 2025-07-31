@@ -4,6 +4,7 @@ author: Lukas Pinto
 date: 2023-12-10 12:00:00 +0800
 categories: [HackMyVM, Hacking]
 tags: [Buffer Overflow, LFI, Scripting]
+description: "Durante la enumeración, se descubrieron los puertos 22 y 80 abiertos. Aprovechando una vulnerabilidad LFI con wrappers, se accedieron a archivos sensibles y se restableció la contraseña del usuario admin. Luego, se subió una webshell para obtener acceso como usuario y se identificó un binario vulnerable a buffer overflow. Finalmente, mediante ROP y explotación remota, se logró escalar privilegios a root."
 pin: true
 image:
   path: /posts/2023-12-10-HVM-Minimal/minimal.png

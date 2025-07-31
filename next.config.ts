@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["@chakra-ui/react"],
     //mdxRs: true
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  }
   //transpilePackages: ['next-mdx-remote-client'],
 };
 

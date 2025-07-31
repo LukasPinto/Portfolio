@@ -4,6 +4,7 @@ author: Lukas Pinto
 date: 2023-12-16 12:00:00 +0800
 categories: [HackMyVM]
 tags: [Upload Bypass, Default Credentials, Cracking Hash, GLPI, Scripting, ACL]
+description: "Se identificaron los puertos 22 y 80 abiertos, corriendo un GLPI vulnerable a login por credenciales por defecto. Desde su panel se habilitó la subida de archivos .php, logrando una reverse shell mediante un archivo malicioso cargado en /files/_tmp. Se escalaron privilegios al usuario tally obteniendo credenciales de una base de datos y crackeando hashes. Finalmente, se abusaron permisos ACL en un archivo config.json para forzar un backup automatizado ejecutado como root, obteniendo así acceso a la clave privada SSH y comprometiendo totalmente el sistema."
 pin: true
 image:
   path: /posts/2023-12-16-HVM-Stardust/stardust.png

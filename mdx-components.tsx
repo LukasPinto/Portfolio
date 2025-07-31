@@ -113,15 +113,22 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </>
     ),
     img: (props) => (
-      <Center width="100%">
-        <img {...props}>{props.children}</img>
+
+      <Center className="spacing">
+        <img {...props} />
       </Center>
+
     ),
-    p: (props) => (
-      <>
-        <p className="spacing">{props.children} </p>
-      </>
-    ),
+    p: (props) => {
+      if (typeof props.children === "string") {
+        return <p className="spacing"> {props.children}</p>
+      }
+      return (
+        <>
+          {props.children}
+        </>
+      )
+    },
 
     ...components,
   };
