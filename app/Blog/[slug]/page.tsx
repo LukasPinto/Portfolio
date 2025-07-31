@@ -94,8 +94,5 @@ export async function generateStaticParams() {
   const pages = files.map((item: { slug: string }) => {
     return { slug: item.slug };
   });
-
-  return [pages];
+  return pages;
 }
-
-export const dynamicParams = false;
