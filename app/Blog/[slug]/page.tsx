@@ -50,8 +50,9 @@ export default async function Page({ params }: { params: any }) {
               <Image
                 objectFit="cover"
                 w="50rem"
-                src={`${(file.matter.image as { path: string }).path as string
-                  }`}
+                src={`${
+                  (file.matter.image as { path: string }).path as string
+                }`}
                 rounded="md"
                 marginTop={3}
               />
@@ -73,8 +74,6 @@ export default async function Page({ params }: { params: any }) {
             components={useMDXComponents({})}
             options={options}
           />
-
-         
         </Box>
         <Box width="30%" display="flex" paddingRight={4}>
           <TableOfContent
