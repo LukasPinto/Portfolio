@@ -1,16 +1,10 @@
-import {
-  Stack,
-  Box,
-  Heading,
-  Text,
-  Separator,
-  Flex,
-} from "@chakra-ui/react";
-import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc";
+import { Stack, Box, Heading, Text, Separator, Flex } from "@chakra-ui/react";
 
 import Tecnologias from "@/app/ui/Tecnologias";
 import { getFileBySlug, plugins } from "@/app/utils/mdxFiles";
-import { useMDXComponents } from "@/mdx-components";
+import { type MDXRemoteOptions } from "next-mdx-remote-client/rsc";
+import MDXRender from "../ui/MDXRender";
+
 const options: MDXRemoteOptions = {
   parseFrontmatter: true,
   mdxOptions: {
@@ -27,9 +21,14 @@ export default async function AboutMe() {
       <Stack
         display="flex"
         direction="row"
-        paddingX={{ base: "1rem", sm: "1rem", md: "1rem", lg: "2rem", xl: "2rem" }}
+        paddingX={{
+          base: "1rem",
+          sm: "1rem",
+          md: "1rem",
+          lg: "2rem",
+          xl: "2rem",
+        }}
         width={{ base: "full", sm: "full", md: "full", lg: "90%", xl: "85%" }}
-
       >
         <Stack paddingTop={4} paddingBottom={4} marginY={4}>
           <Stack
@@ -80,11 +79,7 @@ export default async function AboutMe() {
           <Heading size="4xl">Experiencia y proyectos</Heading>
           <Separator />
           <Box>
-            <MDXRemote
-              source={file.source}
-              components={useMDXComponents({})}
-              options={options}
-            />
+            <MDXRender file={file} opts={options}></MDXRender>
           </Box>
         </Stack>
       </Stack>

@@ -1,11 +1,11 @@
 import { getAllMdxFiles, getFileBySlug, plugins } from "@/app/utils/mdxFiles";
-import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc";
-import { useMDXComponents } from "@/mdx-components";
+import { type MDXRemoteOptions } from "next-mdx-remote-client/rsc";
 import { Box, Stack, Heading, Image, Badge, Center } from "@chakra-ui/react";
 import TableOfContent from "@/app/ui/Toc";
 import "@/app/styles/code.css";
 import "@/app/styles/global.css";
-export default async function Page({ params }: { params: any }) {
+import MDXRender from "@/app/ui/MDXRender";
+export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = await params;
 
   const file = await getFileBySlug({ slug });
@@ -50,10 +50,12 @@ export default async function Page({ params }: { params: any }) {
               <Image
                 objectFit="cover"
                 w="50rem"
-                src={`${(file.matter.image as { path: string }).path as string
-                  }`}
+                src={`${
+                  (file.matter.image as { path: string }).path as string
+                }`}
                 rounded="md"
                 marginTop={3}
+                alt={file.slug}
               />
             </Center>
             <Center>
@@ -61,20 +63,15 @@ export default async function Page({ params }: { params: any }) {
                 <Badge>Autor: {file.matter.author as string}</Badge>
                 <Badge>
                   Tiempo de lectura:{" "}
-                  {Math.round((file.readingTime as any).minutes as number) +
-                    " "}
+                  {Math.round(
+                    (file.readingTime as { minutes: number }).minutes as number
+                  ) + " "}
                   minutos
                 </Badge>
               </Box>
             </Center>
           </Stack>
-          <MDXRemote
-            source={file.source}
-            components={useMDXComponents({})}
-            options={options}
-          />
-
-         
+          <MDXRender file={file} opts={options}></MDXRender>
         </Box>
         <Box width="30%" display="flex" paddingRight={4}>
           <TableOfContent
@@ -90,8 +87,8 @@ export default async function Page({ params }: { params: any }) {
 
 export async function generateStaticParams() {
   const files = await getAllMdxFiles();
-  const pages = files.map((item: any) => {
-    slug: item.slug;
+  const pages = files.map((item: { slug: string }) => {
+    return { slug: item.slug };
   });
 
   return [pages];

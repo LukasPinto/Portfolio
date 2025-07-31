@@ -9,7 +9,7 @@ const defaultOptions = {
 //este hook se encarga de quedar observando la pantalla/viewport para detectar cuando entra o sale un titulo
 function useActiveSection(
   sectionIds: string[],
-  forceState: string | null,
+
   options?: IntersectionObserverInit
 ): string | null {
   const [activeId, setActiveId] = useState<string | null>("");
@@ -26,10 +26,7 @@ function useActiveSection(
     if (observerRef.current) {
       observerRef.current.disconnect();
     }
-    if (forceState !== "") {
-      setActiveId(forceState as string | null);
-      return;
-    }
+
     const observerOptions: IntersectionObserverInit = {
       ...defaultOptions,
       ...options,
@@ -62,7 +59,7 @@ function useActiveSection(
         observerRef.current.disconnect();
       }
     };
-  }, [sectionIds, options?.rootMargin, options?.threshold, options?.root]);
+  }, [sectionIds, options]);
 
   return activeId;
 }

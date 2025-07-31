@@ -4,17 +4,7 @@ import { Roboto } from "next/font/google";
 
 import { Provider } from "../components/ui/provider";
 import NavBar from "./ui/NavBar";
-import {
-  Grid,
-  GridItem,
-  Box,
-  Center,
-  Image,
-  Card,
-  Heading,
-  Text,
-  Flex,
-} from "@chakra-ui/react";
+import { Grid, GridItem, Box } from "@chakra-ui/react";
 import CardAboutMe from "./ui/CardAboutMe";
 
 const roboto = Roboto({
@@ -28,8 +18,8 @@ const roboto = Roboto({
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props;
   return (
-    <html lang="en" className={roboto.variable} suppressHydrationWarning >
-      <body >
+    <html lang="en" className={roboto.variable} suppressHydrationWarning>
+      <body>
         <Provider>
           <Grid
             templateRows="repeat(5, 1fr)"

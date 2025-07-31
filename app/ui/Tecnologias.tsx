@@ -5,8 +5,8 @@ export default async function Tecnologias() {
   const images = await getFiles(["public", "tecnologias"]);
   return (
     <>
-      {images.map((img: any, index: any) => (
-        <Box key={index}>
+      {images.map((img: string) => (
+        <Box key={img}>
           <Center height="10rem" w="10rem">
             <Card.Root
               zIndex={-1000}
@@ -17,6 +17,7 @@ export default async function Tecnologias() {
             >
               <Center height="full">
                 <Image
+                  alt={img}
                   fit="contain"
                   height="80%"
                   srcSet={`/tecnologias/${img}`}

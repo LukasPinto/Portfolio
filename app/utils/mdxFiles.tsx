@@ -8,8 +8,8 @@ import remarkGfm from "remark-gfm";
 import remarkEmoji from "remark-emoji";
 import { compile } from "@mdx-js/mdx";
 import withSlugs from "remark-slug";
-import withToc from "@stefanprobst/remark-extract-toc";
-import { type PluggableList } from "unified";
+import withToc, { Toc, TocEntry } from "@stefanprobst/remark-extract-toc";
+import { Pluggable, type PluggableList } from "unified";
 import rehypeHighlight from "rehype-highlight";
 import rehypeHighlightLines from "rehype-highlight-code-lines";
 import rehypeSlug from "rehype-slug";
@@ -18,6 +18,7 @@ import { getFrontmatter } from "next-mdx-remote-client/utils";
 import rehypeCodeMeta from "rehype-code-meta";
 import remarkCodeTitles from "remark-flexible-code-titles";
 import remarkReadingTime from "remark-reading-time";
+
 const rootPath = process.cwd();
 
 const remarkPlugins: PluggableList = [
@@ -41,10 +42,9 @@ const rehypePlugins: PluggableList = [
   rehypeSlug,
   rehypePreLanguage,
 ];
-export async function getFiles(pathDir: any) {
+export async function getFiles(pathDir: string[]) {
   const directoryPath = path.join(rootPath, ...pathDir);
-  let files: any = [];
-  let errroReading = null;
+  let files: string[] = [];
 
   try {
     const items = await fs.readdir(directoryPath, { withFileTypes: true });
@@ -55,56 +55,12 @@ export async function getFiles(pathDir: any) {
   return files;
 }
 
-export async function getFileBySlug({ slug }: any) {
-  const mdxSource = await fs.readFile(
-    `${rootPath.toString()}/data/${slug}.mdx`,
-    { encoding: "utf8" }
-  );
-  const { frontmatter } = getFrontmatter(mdxSource);
-
-  // compilo para extraer la table of content Y utilizar plugins que extraen información
-  const toc = compile(mdxSource, {
-    remarkPlugins: [
-      withSlugs as any,
-      withToc,
-      remarkRehype,
-      remarkFrontmatter,
-      remarkReadingTime,
-    ],
-  });
-  /** se puede con unified pero hay que usar una función llamada DangerousHTML, prefiero el mdxremote
-   * que tiene plugins para poder gestionar una inyección de HTML
-   */
-  /*PRUEBA CON UNIFIED*/
-  // const processedContent = await unified()
-  //   .use(remarkParse)
-  //   .use(remarkRehype, { allowDangerousHtml: true })
-  //   .use(rehypeRaw)
-
-  //   // @ts-ignore
-  //   .use(rehypePrism)
-  //   .use(rehypeStringify)
-  //   .process(mdxSource);
-  /*PRUEBA CON UNIFIED */
-
-  // console.log((await toc).data.toc)
-  // console.log(toc);
-  return {
-    // source: source.content,
-    source: mdxSource,
-    slug: slug,
-    matter: frontmatter,
-    toc: (await toc).data.toc,
-    readingTime: (await toc).data.readingTime,
-  };
-}
-
 export async function getAllMdxFiles() {
-  const files = (await getFiles(["data"])).map((file: any) =>
+  const files = (await getFiles(["data"] as string[])).map((file: string) =>
     file.replace(".mdx", "")
   );
 
-  let metadata = files.map(async (file: any) => {
+  const metadata = files.map(async (file: string) => {
     const mdxSource = await getFileBySlug({ slug: file });
     const data = {
       matter: mdxSource.matter,
@@ -114,12 +70,92 @@ export async function getAllMdxFiles() {
 
     return data;
   });
-  let aux: any = [];
-  aux = Promise.all(metadata).then((values) => {
+
+  return Promise.all(metadata).then((values) => {
     return values;
   });
+}
 
-  return aux;
+export async function getFileBySlug({ slug }: { slug: string }) {
+  const mdxSource = await fs.readFile(
+    `${rootPath.toString()}/data/${slug}.mdx`,
+    { encoding: "utf8" }
+  );
+  const { frontmatter } = getFrontmatter(mdxSource);
+
+  // compilo para extraer la table of content Y utilizar plugins que extraen información
+  const data = compile(mdxSource, {
+    remarkPlugins: [
+      withSlugs as Pluggable,
+      withToc,
+      remarkRehype,
+      remarkFrontmatter,
+      remarkReadingTime,
+    ],
+  });
+  const toc = convertToNodes((await data).data.toc as Toc);
+
+  return {
+    // source: source.content,
+    source: mdxSource,
+    slug: slug,
+    matter: frontmatter as matter,
+    toc: toc,
+    readingTime: (await data).data.readingTime as readingTime,
+  };
+}
+
+export type Node = {
+  id: string;
+  name: string;
+  children?: Node[];
+};
+
+export type readingTime = {
+  text: string;
+  minutes: number;
+  time: number;
+  words: number;
+};
+
+export type post = {
+  source: string;
+  slug: string;
+  matter: matter;
+  toc: object;
+  readingTime: readingTime;
+};
+
+export type matter = {
+  title: string;
+  author: string;
+  date: string;
+  description: string;
+  image: {
+    path: string;
+  };
+  pin: boolean;
+
+  categories: string[];
+  tags: string[];
+};
+
+function convertNode(originalNode: TocEntry): Node {
+  const newNode: Node = {
+    id: originalNode.id as string,
+    name: originalNode.value, // 'value' en el original se convierte en 'name'
+  };
+
+  // Si el nodo original tiene hijos, los mapeamos recursivamente
+  if (originalNode.children && originalNode.children.length > 0) {
+    newNode.children = originalNode.children.map(convertNode);
+  }
+
+  return newNode;
+}
+
+function convertToNodes(originalNodes: TocEntry[]): Node[] {
+  return originalNodes.map(convertNode);
 }
 
 export const plugins = {

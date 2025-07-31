@@ -1,37 +1,13 @@
 "use client";
-import { Toc } from "@stefanprobst/remark-extract-toc";
 import { TreeView, createTreeCollection, Box } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 import useActiveSection from "@/app/hooks/useActiveSection";
 import { FaRegCircle, FaCircle } from "react-icons/fa";
-
-interface Node {
-  id: string;
-  name: string;
-  children?: Node[];
-}
-
-function convertNode(originalNode: any): Node {
-  const newNode: Node = {
-    id: originalNode.id,
-    name: originalNode.value, // 'value' en el original se convierte en 'name'
-  };
-
-  // Si el nodo original tiene hijos, los mapeamos recursivamente
-  if (originalNode.children && originalNode.children.length > 0) {
-    newNode.children = originalNode.children.map(convertNode);
-  }
-
-  return newNode;
-}
-
-function convertToNodes(originalNodes: Toc[]): Node[] {
-  return originalNodes.map(convertNode);
-}
-
-const extractAllSectionIds = (nodes: any): string[] => {
+import { Node } from "@/app/utils/mdxFiles";
+import { matter } from "@/app/utils/mdxFiles";
+const extractAllSectionIds = (nodes: Node[]): string[] => {
   let ids: string[] = [];
-  nodes.forEach((node: any) => {
+  nodes.forEach((node: Node) => {
     ids.push(node.id);
     if (node.children && node.children.length > 0) {
       ids = ids.concat(extractAllSectionIds(node.children));
@@ -40,26 +16,31 @@ const extractAllSectionIds = (nodes: any): string[] => {
   return ids;
 };
 
-export default function TableOfContent({ content, matter, slug }: any) {
-  const tableOfContentsData: any[] = [];
+export default function TableOfContent({
+  content,
+  matter,
+  slug,
+}: {
+  content: Node[];
+  matter: matter;
+  slug: string;
+}) {
   const allSectionsIds = useMemo(
     () => extractAllSectionIds(content),
     [content]
   );
-
-  const activeSectionId = useActiveSection(allSectionsIds, "") as any | "";
+  const activeSectionId = useActiveSection(allSectionsIds) as string;
   // useEffect(() => {
   //   console.log(matter, slug);
   // }, [activeSectionId]);
-  const convertedData: Node[] = convertToNodes(content as any);
 
   const toc = createTreeCollection<Node>({
     nodeToValue: (node) => node.id,
     nodeToString: (node) => node.name,
-    rootNode: { id: "ROOT", name: "", children: convertedData },
+    rootNode: { id: "ROOT", name: "", children: content },
   });
   //el exanpedValue guarda los que estan abierto/expandidos
-  const [expandedValue, setExpandedValue] = useState<string[]>(allSectionsIds);
+  const [expandedValue] = useState<string[]>(allSectionsIds);
   return (
     <>
       <Box
@@ -79,9 +60,8 @@ export default function TableOfContent({ content, matter, slug }: any) {
           maxW="sm"
           selectedValue={[activeSectionId]}
           expandedValue={expandedValue}
-          
         >
-          <TreeView.Label>{matter?.title}</TreeView.Label>
+          <TreeView.Label>{matter?.title as string}</TreeView.Label>
           <TreeView.Tree>
             <TreeView.Node
               indentGuide={<TreeView.BranchIndentGuide />}
