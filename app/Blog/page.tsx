@@ -3,7 +3,7 @@ import { getAllMdxFiles } from "@/app//utils/mdxFiles";
 import PaginationUI from "@/app/ui/Pagination";
 import type { post, matter, Node, readingTime } from "@/app//utils/mdxFiles";
 export default async function Blog() {
-  let posts = await getAllMdxFiles();
+  const posts = await getAllMdxFiles();
   let converted = posts.map(
     (value: { matter: matter; toc: Node[]; slug: string }) => {
       return {
