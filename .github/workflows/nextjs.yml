@@ -5,6 +5,16 @@
 name: Deploy Next.js site to Pages
 
 on:
+  workflow_dispatch:
+    inputs:
+    branch:
+      description: 'Rama a desplegar'
+      required: true
+      default: 'web' # Valor por defecto
+      type: choice
+      options:
+        - main
+        - web
   # Runs on pushes targeting the default branch
   push:
     branches: ["web"]
