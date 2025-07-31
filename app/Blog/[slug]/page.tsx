@@ -5,7 +5,11 @@ import TableOfContent from "@/app/ui/Toc";
 import "@/app/styles/code.css";
 import "@/app/styles/global.css";
 import MDXRender from "@/app/ui/MDXRender";
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
 
   const file = await getFileBySlug({ slug });
