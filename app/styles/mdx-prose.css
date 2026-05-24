@@ -1,0 +1,151 @@
+/* MDX prose styles */
+
+.mdx-prose {
+  line-height: 1.75;
+  color: var(--chakra-colors-fg-muted, inherit);
+}
+
+.mdx-prose .mdx-heading {
+  scroll-margin-top: calc(var(--app-nav-height, 3.5rem) + 1rem);
+  color: var(--chakra-colors-fg, inherit);
+}
+
+.mdx-prose .mdx-heading:hover .mdx-anchor {
+  opacity: 0.6;
+}
+
+.mdx-prose .mdx-anchor {
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.mdx-prose a:not(.mdx-anchor) {
+  color: var(--chakra-colors-cyan-400, #22d3ee);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.mdx-prose a:not(.mdx-anchor):hover {
+  color: var(--chakra-colors-teal-400, #2dd4bf);
+  text-decoration-color: currentColor;
+}
+
+.mdx-prose a:not(.mdx-anchor)[href^="http"]::after {
+  content: " ↗";
+  font-size: 0.75em;
+}
+
+.mdx-prose .inline-code,
+.mdx-prose code.inline-code {
+  background: var(--color-inline-code-bg);
+  color: var(--color-inline-code-fg);
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  border: 1px solid var(--chakra-colors-border, rgba(255, 255, 255, 0.1));
+  font-size: 0.875em;
+  font-family: var(--font-jetbrains, ui-monospace, monospace);
+}
+
+.mdx-prose blockquote:not(.mdx-callout) {
+  border-left: 4px solid var(--chakra-colors-cyan-500, #06b6d4);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--chakra-colors-fg-muted, #a1a1aa);
+  font-style: italic;
+}
+
+.mdx-prose .mdx-table-wrap {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--chakra-colors-border, rgba(255, 255, 255, 0.1));
+  border-radius: 0.5rem;
+}
+
+.mdx-prose table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mdx-prose thead {
+  position: sticky;
+  top: 0;
+  background: var(--chakra-colors-bg-muted, #27272a);
+  z-index: 1;
+}
+
+.mdx-prose th,
+.mdx-prose td {
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid var(--chakra-colors-border, rgba(255, 255, 255, 0.1));
+  text-align: left;
+}
+
+.mdx-prose tbody tr:nth-child(even) {
+  background: var(--chakra-colors-bg-subtle, rgba(255, 255, 255, 0.02));
+}
+
+.mdx-prose ul,
+.mdx-prose ol {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.mdx-prose ul {
+  list-style-type: disc;
+}
+
+.mdx-prose ul ul {
+  list-style-type: circle;
+}
+
+.mdx-prose li::marker {
+  color: var(--chakra-colors-cyan-400, #22d3ee);
+}
+
+.mdx-prose li + li {
+  margin-top: 0.375rem;
+}
+
+.mdx-prose hr,
+.mdx-prose .mdx-hr {
+  border: none;
+  height: 2px;
+  margin: 2rem 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--chakra-colors-cyan-500, #06b6d4),
+    var(--chakra-colors-teal-500, #14b8a6),
+    transparent
+  );
+}
+
+.mdx-prose strong {
+  color: var(--chakra-colors-fg, inherit);
+  font-weight: 700;
+}
+
+.mdx-prose em {
+  color: var(--chakra-colors-fg-muted, inherit);
+  font-style: italic;
+}
+
+.mdx-prose .spacing {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.mdx-prose .rehype-code-title {
+  display: none;
+}
+
+.mdx-prose .mdx-code-block pre {
+  border: none;
+  border-radius: 0;
+}
+
+.mdx-prose .mdx-figure img {
+  display: block;
+  width: 100%;
+}

@@ -15,9 +15,19 @@ code.hljs {
   Outdated base version: https://github.com/primer/github-syntax-dark
   Current colors taken from GitHub's CSS
 */
-.hljs {
+.dark .hljs {
   color: #c9d1d9;
   background: #0d1117;
+}
+
+.light .hljs {
+  color: #24292f;
+  background: #f6f8fa;
+}
+
+.hljs {
+  color: #c9d1d9;
+  background: var(--color-code-background);
 }
 .hljs-doctag,
 .hljs-keyword,
@@ -101,24 +111,20 @@ code.hljs {
     "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier,
     monospace;
 
-  background-color: black;
-  color: white;
+  background-color: var(--color-code-title-bg);
+  color: var(--color-code-title-fg);
   z-index: 0;
 
   border-top-left-radius: 0.3em;
   border-top-right-radius: 0.3em;
 }
-/* lineas de css para los iniline-code 
-TODO: añadir estilos al resto de componentes
-TODO: en un futuro migrar todo a css nativo
-*/
 
 .inline-code {
-  background-color: #27272a;
+  background-color: var(--color-inline-code-bg);
   padding-left: 4px;
   padding-right: 4px;
   border-radius: 4px;
-  color: #c9def1;
+  color: var(--color-inline-code-fg);
   font-size: small;
 }
 

@@ -1,98 +1,62 @@
 "use client";
-import { TreeView, createTreeCollection, Box } from "@chakra-ui/react";
-import { useMemo, useState } from "react";
+
+import { Box } from "@chakra-ui/react";
+import { useMemo } from "react";
 import useActiveSection from "@/app/hooks/useActiveSection";
-import { FaRegCircle, FaCircle } from "react-icons/fa";
-import { Node } from "@/app/utils/mdxFiles";
-import { matter } from "@/app/utils/mdxFiles";
-const extractAllSectionIds = (nodes: Node[]): string[] => {
-  let ids: string[] = [];
-  nodes.forEach((node: Node) => {
-    ids.push(node.id);
-    if (node.children && node.children.length > 0) {
-      ids = ids.concat(extractAllSectionIds(node.children));
-    }
-  });
-  return ids;
+import type { Node } from "@/app/types/mdx";
+import TocNav from "@/app/ui/toc/TocNav";
+import TocPanel from "@/app/ui/toc/TocPanel";
+import { collectSectionIds, readingProgress } from "@/app/ui/toc/utils";
+
+export type TableOfContentProps = {
+  content: Node[];
+  slug: string;
 };
 
-export default function TableOfContent({
-  content,
-  matter,
-  slug,
-}: {
-  content: Node[];
-  matter: matter;
-  slug: string;
-}) {
-  const allSectionsIds = useMemo(
-    () => extractAllSectionIds(content),
-    [content]
-  );
-  const activeSectionId = useActiveSection(allSectionsIds) as string;
-  // useEffect(() => {
-  //   console.log(matter, slug);
-  // }, [activeSectionId]);
+export default function TableOfContent({ content, slug }: TableOfContentProps) {
+  const sectionIds = useMemo(() => collectSectionIds(content), [content]);
+  const activeSectionId = useActiveSection(sectionIds);
+  const progress = readingProgress(sectionIds, activeSectionId);
 
-  const toc = createTreeCollection<Node>({
-    nodeToValue: (node) => node.id,
-    nodeToString: (node) => node.name,
-    rootNode: { id: "ROOT", name: "", children: content },
-  });
-  //el exanpedValue guarda los que estan abierto/expandidos
-  const [expandedValue] = useState<string[]>(allSectionsIds);
+  if (content.length === 0) {
+    return null;
+  }
+
+  const nav = (
+    <TocNav
+      nodes={content}
+      slug={slug}
+      activeSectionId={activeSectionId}
+    />
+  );
+
   return (
     <>
+      <Box display={{ base: "block", lg: "none" }} width="100%">
+        <TocPanel
+          sectionCount={sectionIds.length}
+          progress={progress}
+          collapsible
+        >
+          {nav}
+        </TocPanel>
+      </Box>
+
       <Box
-        alignSelf="start"
-        display={{
-          base: "none",
-          sm: "none",
-          md: "none",
-          lg: "block",
-        }}
+        as="aside"
+        aria-label="Tabla de contenidos"
+        display={{ base: "none", lg: "block" }}
         position="sticky"
-        top="4rem"
+        top="var(--app-nav-height, 3.5rem)"
+        zIndex={10}
+        width="100%"
+        maxHeight="calc(100dvh - var(--app-nav-height, 3.5rem) - 1rem)"
+        overflowY="auto"
         paddingY={2}
       >
-        <TreeView.Root
-          collection={toc}
-          maxW="sm"
-          selectedValue={[activeSectionId]}
-          expandedValue={expandedValue}
-        >
-          <TreeView.Label>{matter?.title as string}</TreeView.Label>
-          <TreeView.Tree>
-            <TreeView.Node
-              indentGuide={<TreeView.BranchIndentGuide />}
-              render={({ node, nodeState }) =>
-                nodeState.isBranch ? (
-                  <a href={`/Blog/${slug}#${node.id}`}>
-                    <TreeView.BranchControl>
-                      {node.id == activeSectionId.toString() ? (
-                        <FaCircle></FaCircle>
-                      ) : (
-                        <FaRegCircle />
-                      )}
-                      <TreeView.BranchText>{node.name}</TreeView.BranchText>
-                    </TreeView.BranchControl>
-                  </a>
-                ) : (
-                  <TreeView.Item asChild>
-                    <a href={`/Blog/${slug}#${node.id}`}>
-                      {node.id == activeSectionId.toString() ? (
-                        <FaCircle></FaCircle>
-                      ) : (
-                        <FaRegCircle />
-                      )}
-                      <TreeView.ItemText>{node.name}</TreeView.ItemText>
-                    </a>
-                  </TreeView.Item>
-                )
-              }
-            />
-          </TreeView.Tree>
-        </TreeView.Root>
+        <TocPanel sectionCount={sectionIds.length} progress={progress}>
+          {nav}
+        </TocPanel>
       </Box>
     </>
   );

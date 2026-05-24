@@ -1,68 +1,100 @@
-"use client"
-import { VStack, Box, Tabs } from "@chakra-ui/react";
+"use client";
+
+import { HStack, Box } from "@chakra-ui/react";
 import Link from "next/link";
-import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation";
+import { ColorModeButton } from "@/components/ui/color-mode";
+
+const navItems = [
+  { href: "/AboutMe", label: "Sobre Mí", value: "AboutMe" },
+  { href: "/Blog", label: "Blog", value: "Blog" },
+] as const;
+
 export default function NavBar() {
-  const pathname: string = usePathname()
+  const pathname = usePathname();
+  const activeValue = pathname.split("/")[1] || "AboutMe";
 
-  const [value, setValue] = useState<string | null>('')
-  useEffect(() => {
-    setValue(pathname.split('/')[1]);
-
-  }, [pathname])
-  // console.log(pathname.split('/')[1])
   return (
-    <>
-      <Box
-        position={{
-          base: "sticky",
-          sm: "sticky",
-          md: "sticky",
-          lg: "sticky",
-          xl: "sticky",
-        }}
-        top={{ base: 0, sm: 0, md: 0, lg: 0, xl: 0 }}
-        zIndex={100}
-        alignSelf="start"
+    <Box
+      as="nav"
+      aria-label="Principal"
+      position="sticky"
+      top={0}
+      zIndex={110}
+      width="100%"
+      bg="bg.subtle"
+      borderBottomWidth="1px"
+      borderColor="border"
+      backdropFilter="blur(12px)"
+      css={{
+        WebkitBackdropFilter: "blur(12px)",
+        paddingTop: "env(safe-area-inset-top, 0px)",
+      }}
+    >
+      <HStack
+        paddingY={{ base: 2, md: 3 }}
+        paddingX={{ base: 3, md: 4 }}
+        width="100%"
+        maxWidth="100vw"
+        justify="space-between"
+        gap={2}
       >
-        <VStack paddingTop={4} width="100%" background="#09090b">
-          <Box width="full">
-            <Tabs.Root value={value} onValueChange={(e) => setValue(e.value)}>
-              <Tabs.List>
-
-                <Link href="/AboutMe">
+        <HStack
+          as="ul"
+          gap={{ base: 1, md: 2 }}
+          listStyleType="none"
+          margin={0}
+          padding={0}
+          flex={1}
+          minWidth={0}
+          overflowX="auto"
+          css={{
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            "&::-webkit-scrollbar": { display: "none" },
+          }}
+        >
+          {navItems.map(({ href, label, value }) => {
+            const isActive = activeValue === value;
+            return (
+              <Box as="li" key={value} flexShrink={0}>
+                <Link
+                  href={href}
+                  aria-current={isActive ? "page" : undefined}
+                  style={{ textDecoration: "none" }}
+                >
                   <Box
-                    transition="all 0.2s ease-in-out" // Aplica la transición a todas las propiedades que cambien
+                    display="block"
+                    paddingX={{ base: 3, md: 4 }}
+                    paddingY={2}
+                    borderRadius="md"
+                    fontSize={{ base: "sm", md: "md" }}
+                    fontWeight={isActive ? "semibold" : "medium"}
+                    color={isActive ? "cyan.400" : "fg.muted"}
+                    bg={isActive ? "bg.muted" : "transparent"}
+                    borderWidth="1px"
+                    borderColor={isActive ? "cyan.700" : "transparent"}
+                    boxShadow={
+                      isActive ? "0 0 12px rgba(34, 211, 238, 0.15)" : "none"
+                    }
+                    whiteSpace="nowrap"
+                    transition="all 0.2s ease"
                     _hover={{
-                      bg: "gray.900", // Cambia el color de fondo
-                      transform: "scale(1.02)", // Escala el componente
-                      boxShadow: "lg", // Agrega una sombra
+                      bg: "bg.muted",
+                      color: "cyan.400",
                     }}
-                    borderTopRadius='md'
                   >
-                    <Tabs.Trigger value="AboutMe">Sobre Mí</Tabs.Trigger>
-                  </Box>
-
-                </Link>
-                <Link href="/Blog">
-                  <Box
-                    transition="all 0.2s ease-in-out" // Aplica la transición a todas las propiedades que cambien
-                    _hover={{
-                      bg: "gray.900", // Cambia el color de fondo
-                      transform: "scale(1.02)", // Escala el componente
-                      boxShadow: "lg", // Agrega una sombra
-                    }}
-                    borderTopRadius='md'>
-                    <Tabs.Trigger value="Blog">Blog</Tabs.Trigger>
+                    {label}
                   </Box>
                 </Link>
-              </Tabs.List>
-              {/* ... */}
-            </Tabs.Root>
-          </Box>
-        </VStack>
-      </Box>
-    </>
+              </Box>
+            );
+          })}
+        </HStack>
+        <Box flexShrink={0}>
+          <ColorModeButton />
+        </Box>
+      </HStack>
+    </Box>
   );
 }

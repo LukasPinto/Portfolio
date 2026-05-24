@@ -1,43 +1,37 @@
-import { HStack, Box } from "@chakra-ui/react";
-import { getAllMdxFiles } from "@/app//utils/mdxFiles";
-import PaginationUI from "@/app/ui/Pagination";
-import type { post, matter, Node, readingTime } from "@/app//utils/mdxFiles";
+import { Box, Stack, Heading, Text } from "@chakra-ui/react";
+import { getAllMdxSummaries, getBlogSearchDocuments } from "@/app/utils/mdxFiles";
+import BlogListing from "@/app/ui/BlogListing";
+import { FadeIn } from "@/app/ui/motion";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description:
+    "Writeups de CTF, HackTheBox, Hackviser y artículos sobre ciberseguridad.",
+};
+
 export default async function Blog() {
-  const posts = await getAllMdxFiles();
-  let converted = posts.map(
-    (value: { matter: matter; toc: Node[]; slug: string }) => {
-      return {
-        source: "",
-        slug: value.slug,
-        matter: value.matter,
-        toc: value.toc,
-        readingTime: {
-          text: "",
-          minutes: 0,
-          time: 0,
-          words: 0,
-        } as readingTime,
-      } as post;
-    }
-  );
-  converted = converted.filter((file: post) => file.slug != "experiencia");
+  const [posts, searchDocuments] = await Promise.all([
+    getAllMdxSummaries(),
+    getBlogSearchDocuments(),
+  ]);
 
   return (
-    <>
-      <HStack justifyContent="center">
-        <PaginationUI posts={converted}></PaginationUI>
-        <Box
-          display={{
-            base: "none",
-            sm: "none",
-            md: "none",
-            lg: "block",
-          }}
-          width="20%"
-        >
-          {/* queda pendiente por hacer una posible barra latera de tags o busquedas, además de la paginación. */}
-        </Box>
-      </HStack>
-    </>
+    <Box width="100%" maxWidth="6xl" marginX="auto" paddingX={{ base: 4, sm: 5, lg: 8 }}>
+      <Stack paddingTop={{ base: 4, md: 6 }} gap={2}>
+        <FadeIn>
+          <Box as="header">
+            <Heading as="h1" size={{ base: "2xl", md: "3xl" }} colorPalette="cyan">
+              Blog
+            </Heading>
+            <Text color="fg.muted" marginTop={2}>
+              Writeups de CTF, HackTheBox, Hackviser y artículos sobre
+              ciberseguridad.
+            </Text>
+          </Box>
+        </FadeIn>
+      </Stack>
+      <BlogListing posts={posts} searchDocuments={searchDocuments} />
+    </Box>
   );
 }

@@ -1,87 +1,52 @@
-import { Stack, Box, Heading, Text, Separator, Flex } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
+import type { Metadata } from "next";
+import AboutHero from "@/app/ui/about/AboutHero";
+import IntroCards from "@/app/ui/about/IntroCards";
+import SkillGroups from "@/app/ui/about/SkillGroups";
+import ExperienceTimeline from "@/app/ui/about/ExperienceTimeline";
 
-import Tecnologias from "@/app/ui/Tecnologias";
-import { getFileBySlug, plugins } from "@/app/utils/mdxFiles";
-import { type MDXRemoteOptions } from "next-mdx-remote-client/rsc";
-import MDXRender from "../ui/MDXRender";
-
-const options: MDXRemoteOptions = {
-  parseFrontmatter: true,
-  mdxOptions: {
-    ...plugins,
-  },
+export const metadata: Metadata = {
+  title: "Sobre Mí",
+  description:
+    "Ingeniero Civil Informático con enfoque en desarrollo web y ciberseguridad.",
 };
 
-export default async function AboutMe() {
-  // const images = getFiles();
+export default function AboutMe() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Lukas Pinto",
+    jobTitle: "Ingeniero Civil Informático",
+    description:
+      "Desarrollador web y entusiasta de la ciberseguridad y los CTF.",
+    url:
+      process.env.NEXT_PUBLIC_SITE_URL ??
+      "https://lukaspinto.github.io/Portfolio",
+    sameAs: [
+      "https://github.com/LukasPinto",
+      "https://app.hackthebox.com/profile/824616",
+    ],
+  };
 
-  const file = await getFileBySlug({ slug: "experiencia" });
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Stack
-        display="flex"
-        direction="row"
-        paddingX={{
-          base: "1rem",
-          sm: "1rem",
-          md: "1rem",
-          lg: "2rem",
-          xl: "2rem",
-        }}
-        width={{ base: "full", sm: "full", md: "full", lg: "90%", xl: "85%" }}
+        paddingX={{ base: 4, sm: 5, lg: 8 }}
+        width="100%"
+        maxWidth="5xl"
+        marginX="auto"
+        gap={{ base: 8, md: 10 }}
+        paddingTop={{ base: 4, md: 6 }}
+        paddingBottom={{ base: 8, md: 10 }}
       >
-        <Stack paddingTop={4} paddingBottom={4} marginY={4}>
-          <Stack
-            direction={{
-              base: "column",
-              sm: "column",
-              md: "column",
-              lg: "row",
-            }}
-          >
-            <Box>
-              <Heading size="4xl">Sobre mí</Heading>
-              <Separator />
-
-              <Text>
-                Soy Ingeniero Civil Informático egresado, con enfoque en el
-                desarrollo web y un profundo interés en el área de
-                ciberseguridad. A lo largo de mi formación académica y
-                experiencias prácticas, he cultivado habilidades sólidas en el
-                diseño y construcción de aplicaciones web, junto con el estudio
-                de forma autodidacta de ciberseguridad.
-              </Text>
-            </Box>
-            <Box>
-              <Heading size="4xl">Aspiraciones</Heading>
-
-              <Separator />
-              <Text>
-                Estoy en constante búsqueda de nuevos aprendizajes y
-                oportunidades que me permitan crecer profesionalmente, colaborar
-                en proyectos innovadores y aportar con soluciones eficientes,
-                seguras y sostenibles en el ámbito tecnológico.
-              </Text>
-            </Box>
-          </Stack>
-
-          <Heading size="4xl">Tecnologías</Heading>
-          <Separator />
-          <Flex
-            wrap="wrap"
-            maxH="100%"
-            gap={2}
-            justifyContent="center"
-            width="100%"
-          >
-            <Tecnologias></Tecnologias>
-          </Flex>
-          <Heading size="4xl">Experiencia y proyectos</Heading>
-          <Separator />
-          <Box>
-            <MDXRender file={file} opts={options}></MDXRender>
-          </Box>
-        </Stack>
+        <AboutHero />
+        <IntroCards />
+        <SkillGroups />
+        <ExperienceTimeline />
       </Stack>
     </>
   );

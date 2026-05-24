@@ -17,11 +17,22 @@ pre code {
 }
 
 pre {
-  padding: 0.5rem 1rem;
+  padding: 0;
   border: 1px solid var(--color-text-weak);
-  border-radius: 5px;
+  border-radius: 0 0 8px 8px;
 
   overflow-x: auto;
+}
+
+.mdx-code-block pre,
+.mdx-code-block pre code {
+  border: none;
+  border-radius: 0;
+}
+
+.parent-container-of-pre:not(.mdx-code-block) pre {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
 
 pre > code {

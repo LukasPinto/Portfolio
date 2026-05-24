@@ -1,10 +1,5 @@
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return <></>;
+  redirect("/AboutMe");
 }
-
-
-export function generateStaticParams() {
-  return [{ slug: "/" }];
-}
-
-export const dynamicParams = false;
